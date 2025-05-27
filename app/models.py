@@ -46,5 +46,6 @@ class Stock(Base):
     zip_code = Column(String, index=True)
     address = Column(String, index=True)
     creation_date = Column(String, index=True)
+    teste = Column(String, index=True)
 
     

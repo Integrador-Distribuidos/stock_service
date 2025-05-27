@@ -5,10 +5,16 @@ class EstoqueBase(BaseModel):
     local: str
     quantidade: int
 
-class EstoqueCreate(EstoqueBase):
-    pass
+class StockCreate(EstoqueBase):
+    name:str
+    city:str
+    uf:str
+    zip_code: str
+    address: str
+    creation_date: str
 
-class EstoqueOut(EstoqueBase):
+
+class StockOut(EstoqueBase):
     id: int
 
     class Config:
