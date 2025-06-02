@@ -1,5 +1,5 @@
-from pydantic import BaseModel
-from datetime import datetime
+from pydantic import BaseModel, Field
+from datetime import datetime, date
 from typing import Optional
 # ---------- STOCK ----------
 
@@ -9,10 +9,10 @@ class StockCreate(BaseModel):
     uf: str
     zip_code: str
     address: str
-    creation_date: Optional[datetime] = None
+    #creation_date: Optional[datetime] = None
 
 class StockOut(BaseModel):
-    id_stock: int
+    id_store: int
     name: str
 
     class Config:
@@ -26,7 +26,6 @@ class ProductCreate(BaseModel):
     price: float
     sku: str
     category: str
-    creation_date: Optional[datetime] = None
 
 class ProductOut(BaseModel):
     id_product: int
@@ -35,7 +34,7 @@ class ProductOut(BaseModel):
     price: float
     sku: str
     category: str
-    creation_date: Optional[datetime] = None
+    #creation_date: date
 
     class Config:
         orm_mode = True
@@ -48,7 +47,7 @@ class StockMovementCreate(BaseModel):
     quantity: int
     observation: Optional[str] = None
     movement_type: str  # exemplo: "entrada", "saída", "transferência"
-    creation_date: Optional[datetime] = None
+    #creation_date: datetime
 
 class StockMovementOut(BaseModel):
     id_movement: int
@@ -58,7 +57,7 @@ class StockMovementOut(BaseModel):
     quantity: int
     observation: Optional[str]
     movement_type: str
-    creation_date: datetime
+    #creation_date: datetime
 
     class Config:
         orm_mode = True

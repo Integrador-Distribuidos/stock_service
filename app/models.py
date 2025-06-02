@@ -1,5 +1,5 @@
-from datetime import datetime
-from sqlalchemy import Column, Float, Integer, String, ForeignKey, DateTime
+from datetime import datetime, date
+from sqlalchemy import Column, Float, Integer, String, ForeignKey, Date
 from app.database import Base
 
 class Product(Base):
@@ -10,7 +10,7 @@ class Product(Base):
     price = Column(Float, index=True)
     sku = Column(String, index=True)
     category = Column(String, index=True)
-    creation_date = Column(DateTime, default=datetime.utcnow)
+    #creation_date = Column(Date, default=date.today)
 
 
 
@@ -23,7 +23,7 @@ class StockMovement(Base):
     quantity = Column(Integer)
     observation = Column(String)
     movement_type = Column(String)
-    creation_date = Column(DateTime, default=datetime.utcnow)
+    #creation_date = Column(Date, nullable=False)
 
 class ProductStock(Base):
     __tablename__ = "product_stock"
@@ -31,16 +31,16 @@ class ProductStock(Base):
     id_product = Column(Integer, ForeignKey("product.id_product"), index=True)
     id_stock = Column(Integer, ForeignKey("stock.id_stock"), index=True)
     quantity = Column(Integer, index=True)
-    last_update_date = Column(DateTime, default=datetime.utcnow)
+    last_update_date = Column(Date, nullable=False)
 
 class Stock(Base):
     __tablename__ = "stock"
-    id_stock = Column(Integer, primary_key=True, index=True)
+    id_store = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
     city = Column(String, index=True)
     uf = Column(String, index=True)
     zip_code = Column(String, index=True)
     address = Column(String, index=True)
-    creation_date = Column(DateTime, default=datetime.utcnow)
+    #creation_date = Column(Date, nullable=False)
 
     

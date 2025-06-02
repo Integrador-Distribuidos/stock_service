@@ -13,7 +13,7 @@ def create_stock(db: Session, stock: schemas.StockCreate):
     return db_stock
 
 def get_stock(db: Session, stock_id: int):
-    return db.query(models.Stock).filter(models.Stock.id_stock == stock_id).first()
+    return db.query(models.Stock).filter(models.Stock.id_store == stock_id).first()
 
 def get_all_stocks(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Stock).offset(skip).limit(limit).all()
@@ -84,5 +84,5 @@ def get_all_stock_movements(db: Session, skip: int = 0, limit: int = 100):
 def get_stock_movement(db: Session, movement_id: int):
     return db.query(models.StockMovement).filter(models.StockMovement.id_movement == movement_id).first()
 
-def get_stock_movements_by_product(db: Session, product_id: int):
+def get_movements_by_product(db: Session, product_id: int):
     return db.query(models.StockMovement).filter(models.StockMovement.id_product == product_id).all()
