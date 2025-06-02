@@ -9,10 +9,10 @@ class StockCreate(BaseModel):
     uf: str
     zip_code: str
     address: str
-    #creation_date: Optional[datetime] = None
+    creation_date: date
 
 class StockOut(BaseModel):
-    id_store: int
+    id_stock: int
     name: str
 
     class Config:
@@ -26,6 +26,7 @@ class ProductCreate(BaseModel):
     price: float
     sku: str
     category: str
+    creation_date: date
 
 class ProductOut(BaseModel):
     id_product: int
@@ -34,7 +35,7 @@ class ProductOut(BaseModel):
     price: float
     sku: str
     category: str
-    #creation_date: date
+    creation_date: date
 
     class Config:
         orm_mode = True
@@ -46,8 +47,8 @@ class StockMovementCreate(BaseModel):
     id_stock_destination: Optional[int] = None
     quantity: int
     observation: Optional[str] = None
-    movement_type: str  # exemplo: "entrada", "saída", "transferência"
-    #creation_date: datetime
+    movement_type: str  
+    creation_date: date
 
 class StockMovementOut(BaseModel):
     id_movement: int
@@ -57,7 +58,7 @@ class StockMovementOut(BaseModel):
     quantity: int
     observation: Optional[str]
     movement_type: str
-    #creation_date: datetime
+    creation_date: date
 
     class Config:
         orm_mode = True
