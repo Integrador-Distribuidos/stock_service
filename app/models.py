@@ -1,9 +1,5 @@
-from datetime import date, datetime
-from re import I
-from textwrap import indent
-from annotated_types import T
-from click import DateTime
-from sqlalchemy import Column, Float, Integer, String, ForeignKey
+from datetime import datetime, date
+from sqlalchemy import Column, Float, Integer, String, ForeignKey, Date
 from app.database import Base
 
 class Product(Base):
@@ -14,28 +10,28 @@ class Product(Base):
     price = Column(Float, index=True)
     sku = Column(String, index=True)
     category = Column(String, index=True)
-    #creation_date = Column(DateTime, default=datetime.utcnow)
+    #creation_date = Column(Date, default=date.today)
 
 
 
-class stock_movement(Base):
+class StockMovement(Base):
     __tablename__ = "stock_movement"
     id_movement = Column(Integer, primary_key=True, index=True)
-    id_product = Column(Integer)
+    id_product = Column(Integer, ForeignKey("product.id_product"))
     id_stock_origin = Column(Integer)
     id_stock_destination = Column(Integer)
     quantity = Column(Integer)
     observation = Column(String)
     movement_type = Column(String)
-    #creation_date = Column(DateTime, default=datetime.utcnow)
+    #creation_date = Column(Date, nullable=False)
 
-class product_stock(Base):
+class ProductStock(Base):
     __tablename__ = "product_stock"
     id_productstock = Column(Integer, primary_key=True, index=True)
-    id_product = Column(Integer, index=True)
-    id_stock = Column(Integer, index=True)
+    id_product = Column(Integer, ForeignKey("product.id_product"), index=True)
+    id_stock = Column(Integer, ForeignKey("stock.id_stock"), index=True)
     quantity = Column(Integer, index=True)
-    #last_update_date = Column(DateTime, default=datetime.utcnow)
+    last_update_date = Column(Date, nullable=False)
 
 class Stock(Base):
     __tablename__ = "stock"
@@ -45,7 +41,6 @@ class Stock(Base):
     uf = Column(String, index=True)
     zip_code = Column(String, index=True)
     address = Column(String, index=True)
-    creation_date = Column(String, index=True)
-    teste = Column(String, index=True)
+    #creation_date = Column(Date, nullable=False)
 
     
