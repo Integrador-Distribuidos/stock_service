@@ -14,6 +14,11 @@ class StockCreate(BaseModel):
 class StockOut(BaseModel):
     id_stock: int
     name: str
+    city: str
+    uf: str
+    zip_code: str
+    address: str
+    creation_date: date
 
     class Config:
         orm_mode = True
@@ -42,6 +47,7 @@ class ProductOut(BaseModel):
 
 
 class StockMovementCreate(BaseModel):
+    id_movement: int
     id_product: int
     id_stock_origin: Optional[int] = None
     id_stock_destination: Optional[int] = None
