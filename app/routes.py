@@ -2,6 +2,7 @@ from curses.ascii import HT
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app import crud, schemas, database
+from fastapi.responses import JSONResponse
 
 router = APIRouter(prefix="/api")
 
@@ -18,6 +19,11 @@ def get_db():
 @router.post("/stocks/", response_model=schemas.StockOut)
 def create_stock(stock: schemas.StockCreate, db: Session = Depends(get_db)):
     return crud.create_stock(db, stock)
+
+#Cadastrar produto no estoque
+@router.post("/stocks/product", response_model=schemas.ProductStockOut)
+def create_productstock(stock: schemas.ProductStock, db: Session = Depends(get_db)):
+    return crud.create_ProductStock(db, stock)
 
 #Consultar estoque específico
 @router.get("/stocks/{id}", response_model=schemas.StockOut)
@@ -57,10 +63,12 @@ def create_product(product: schemas.ProductCreate, db: Session = Depends(get_db)
     return crud.create_product(db, product)
 
 
+
+
 #Consultar todos os produtos
 @router.get("/products/", response_model=list[schemas.ProductOut])
-def read_all_products(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    return crud.get_all_products(db, skip, limit)
+def read_all_products(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)): 
+    return crud.get_all_products_with_stock(db, skip, limit)
 
 
 #Consultar produto específico
@@ -74,14 +82,17 @@ def read_product(id: int, db: Session = Depends(get_db)):
 
 #Alterar produto
 @router.put("/products/{id}", response_model=schemas.ProductOut)
-def update_product(id: int, product: schemas.ProductCreate, db: Session = Depends(get_db)):
+def update_product(id: int, product: schemas.ProductUpdate, db: Session = Depends(get_db)):
     return crud.update_product(db, id, product)
 
 
 #Deletar produto
 @router.delete("/products/{id}", response_model=schemas.ProductOut)
 def delete_product(id: int, db: Session = Depends(get_db)):
-    return crud.delete_product(db, id)
+    product = crud.delete_product(db, id)
+    if not product:
+        return JSONResponse(status_code=404, content={"detail": "Product not found"})
+    return JSONResponse(content={"detail": "Product deleted"})
 
 
 # ------------------------
