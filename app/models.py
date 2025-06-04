@@ -1,7 +1,5 @@
-from datetime import datetime, date
-from sqlalchemy import Column, Float, Integer, String, ForeignKey, Date
+from sqlalchemy import Column, Integer, String, ForeignKey, Date, Float
 from app.database import Base
-
 class Product(Base):
     __tablename__ = "product"
     id_product = Column(Integer, primary_key=True, index=True)
@@ -11,8 +9,6 @@ class Product(Base):
     sku = Column(String, index=True)
     category = Column(String, index=True)
     creation_date = Column(Date, nullable=False)
-
-
 
 class StockMovement(Base):
     __tablename__ = "stock_movement"
@@ -42,5 +38,3 @@ class Stock(Base):
     zip_code = Column(String, index=True)
     address = Column(String, index=True)
     creation_date = Column(Date, nullable=False)
-
-    

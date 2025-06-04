@@ -24,15 +24,37 @@ cd stock_service
 
 
 .
+stock_service Diretório principal da aplicação
 ├── app
-│   ├── main.py          # Ponto de entrada da aplicação FastAPI
-│   ├── models.py        # Modelos do banco de dados
-│   ├── routes.py        # Rotas da API
-│   └── ...
-├── requirements.txt     # Dependências Python
-├── Dockerfile           # Imagem da aplicação FastAPI
-├── docker-compose.yml   # Orquestração dos containers
-└── README.md            # Este arquivo ✨
+│   # Pasta com as funções CRUD (Create, Read, Update, Delete)
+│   ├── crud
+│   │   ├── stock.py       # Funções para operações de estoque no banco (criar, buscar, atualizar, deletar)
+│   │   ├── product.py     # Funções para persistência e recuperação de dados de produtos
+│   │   └── movement.py    # Lógica de movimentações de estoque (entrada, saída, transferência)
+│   │
+│   # Pasta com as rotas/endpoints da API FastAPI
+│   ├── routes
+│   │   ├── stock.py       # Rotas relacionadas ao recurso "estoque" (GET, POST, etc.)
+│   │   ├── product.py     # Rotas do recurso "produto"
+│   │   └── movement.py    # Rotas para movimentações de produtos entre estoques
+│   │
+│   # Schemas Pydantic usados para validação e serialização de dados
+│   ├── schemas
+│   │   ├── stock.py       # Modelos de entrada/saída para operações de estoque
+│   │   ├── product.py     # Modelos para criação e leitura de produtos
+│   │   └── movement.py    # Schemas de movimentação de estoque (entrada, saída, transferência)
+│   │
+│   ├── main.py            # Ponto de entrada da aplicação FastAPI, configura e executa o app
+│   ├── models.py          # Modelos ORM (SQLAlchemy) que representam as tabelas do banco de dados
+│   ├── database.py        # Configuração da conexão com o banco de dados e criação da sessão
+│   └── __init__.py        # Torna o diretório app um pacote Python (pode estar vazio)
+│
+# Arquivos de configuração e documentação
+├── requirements.txt       # Lista de dependências Python necessárias para o projeto
+├── Dockerfile             # Define a imagem Docker para a aplicação FastAPI
+├── docker-compose.yml     # Arquivo de orquestração Docker para app + banco + outros serviços
+└── README.md              # Documentação geral do projeto (setup, uso, contribuições etc.)
+
 
 
 
@@ -42,6 +64,7 @@ ESTOQUES
 | Método | Endpoint                  | Descrição                              |
 | ------ | ------------------------- | -------------------------------------- |
 | POST   | `/api/stocks/`            | Criar um novo registro de estoque      |
+| POST   | '/api/stocks/product/'    | Cadastrar um produto em um estoque     |
 | GET    | `/api/stocks/`            | Listar todos os estoques               |
 | GET    | `/api/stocks/{id}/`       | Detalhar um estoque específico         |
 | GET    | `/api/stocks/store/{id}/` | Listar estoques de uma loja específica |
@@ -65,13 +88,3 @@ MOVIMENTAÇÃO DE ESTOQUE
 | GET    | `/api/stocks/movements/`              | Listar todas as movimentações                 |
 | GET    | `/api/stocks/movements/{id}/`         | Detalhar uma movimentação                     |
 | GET    | `/api/stocks/movements/product/{id}/` | Listar movimentações de um produto específico |
-
-
-
-
-
-1° Apresentação do Integrador - Requisitos
-1 - casos de uso
-2 - arquitetura
-3 - modelo lógico
-4 - endpoints
